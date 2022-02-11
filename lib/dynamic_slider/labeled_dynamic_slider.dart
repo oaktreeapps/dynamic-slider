@@ -56,7 +56,7 @@ class LabeledDynamicSlider extends StatefulWidget {
   /// numeric label style
   final TextStyle? numericLabelTextStyle;
 
-  const LabeledDynamicSlider({
+  LabeledDynamicSlider({
     Key? key,
     required this.inputValues,
     required this.onValueChanged,
@@ -76,7 +76,7 @@ class LabeledDynamicSlider extends StatefulWidget {
       this.tickMarkRadius = 3,
     this.numericLabelTextStyle = const TextStyle(
         color: Colors.black, fontSize: 14.0, fontFamily: 'Roboto'),
-  }) : super(key: key);
+  }) : assert(inputValues.isNotEmpty,"Please add values"),super(key: key);
 
   @override
   _LabeledDynamicSliderState createState() => _LabeledDynamicSliderState();

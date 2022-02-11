@@ -8,9 +8,6 @@ class CustomThumbDynamicSlider extends StatefulWidget {
   final Function(int val) onValueChanged;
 
   /// division numbers
-  final int? numberOfDivisions;
-
-  /// division numbers
   final int min;
 
   /// division numbers
@@ -63,7 +60,6 @@ class CustomThumbDynamicSlider extends StatefulWidget {
     required this.onValueChanged,
     required this.min,
     required this.max,
-    this.numberOfDivisions,
     this.trackHeight = 3,
     this.thumbColor = Colors.grey,
     this.activeTrackColor = Colors.blueGrey,

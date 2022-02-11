@@ -48,7 +48,7 @@ class RatingDynamicSlider extends StatefulWidget {
   /// asset image list
   final List<String> imagesList;
 
-  const RatingDynamicSlider({
+  RatingDynamicSlider({
     Key? key,
     required this.onValueChanged,
     required this.imagesList,
@@ -64,7 +64,7 @@ class RatingDynamicSlider extends StatefulWidget {
     this.overlayThumbRadius = 15,
     this.assetDirection = AssetDirection.down,
     this.tickMarkRadius = 4,
-  }) : super(key: key);
+  }) : assert(imagesList.isNotEmpty,"Please add image assets"),super(key: key);
 
   @override
   _RatingDynamicSliderState createState() => _RatingDynamicSliderState();
