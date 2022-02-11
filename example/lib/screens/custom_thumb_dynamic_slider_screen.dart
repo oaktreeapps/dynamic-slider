@@ -10,15 +10,35 @@ class CustomThumbDynamicSliderScreen extends StatefulWidget {
 
 class _CustomThumbDynamicSliderScreenState extends State<CustomThumbDynamicSliderScreen> {
 
+  var value = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomThumbDynamicSlider(
-        min: 12,
-        max: 100,
-        onValueChanged: (val) {
-          print(val.toString());
-        },
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CustomThumbDynamicSlider(
+              thumbRadius: 23,
+              currencyPrefix: "\$",
+              min: 0,
+              max: 100,
+              onValueChanged: (val) {
+                value = val.toString();
+                setState(() {});
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Output : " + value,
+              style: const TextStyle(color: Colors.black),
+            )
+          ],
+        ),
       ),
     );
   }

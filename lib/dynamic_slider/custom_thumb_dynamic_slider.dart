@@ -124,6 +124,12 @@ class _CustomThumbDynamicSliderState extends State<CustomThumbDynamicSlider> {
             overlayColor: widget.overlayColor,
             trackHeight: widget.trackHeight,
             showValueIndicator: ShowValueIndicator.always,
+            valueIndicatorShape: SliderThumbImage(
+                sliderValue:value,
+                thumbCircleColor: widget.thumbCircleColor,
+                thumbRadius: widget.thumbRadius,
+                thumbLabelTextStyle: widget.thumbLabelTextStyle,
+                currencyPrefix: widget.currencyPrefix),
             valueIndicatorColor: Colors.transparent,
             valueIndicatorTextStyle: const TextStyle(color: Colors.transparent),
             thumbShape: SliderThumbImage(

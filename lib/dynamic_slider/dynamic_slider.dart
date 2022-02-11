@@ -51,25 +51,25 @@ class DynamicSlider extends StatefulWidget {
   /// tick mark radius
   final double? tickMarkRadius;
 
-  const DynamicSlider({
+  DynamicSlider({
     Key? key,
     required this.inputValues,
     required this.isDivisible,
     required this.onValueChanged,
     this.numberOfDivisions,
-    this.trackHeight = 5,
-    this.thumbColor = Colors.grey,
+    this.trackHeight = 3,
+    this.thumbColor = Colors.blue,
     this.activeTrackColor = Colors.blueGrey,
-    this.activeTickMarkColor = Colors.green,
+    this.activeTickMarkColor = Colors.blue,
     this.inactiveTrackColor = Colors.black12,
     this.overlayColor = Colors.cyan,
-    this.valueIndicatorColor = Colors.grey,
+    this.valueIndicatorColor = Colors.lightBlue,
     this.inactiveTickMarkColor = Colors.black87,
     this.thumbRadius = 11,
     this.overlayThumbRadius = 15,
     this.tickMarkRadius = 3,
     this.currencyPrefix = "\$",
-  }) : super(key: key);
+  }) : assert(inputValues.isNotEmpty,"Please add values"),super(key: key);
 
   @override
   _DynamicSliderState createState() => _DynamicSliderState();

@@ -10,6 +10,7 @@ class LabeledDynamicSliderScreen extends StatefulWidget {
 
 class _LabeledDynamicSliderScreenState extends State<LabeledDynamicSliderScreen> {
   late List<int> inputValues;
+  var value = "";
 
   @override
   void initState() {
@@ -31,12 +32,28 @@ class _LabeledDynamicSliderScreenState extends State<LabeledDynamicSliderScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LabeledDynamicSlider(
-        inputValues: inputValues,
-        onValueChanged: (val) {
-          print(val.toString());
-        },
-        labelDirection: NumericLabelDirection.down,
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LabeledDynamicSlider(
+              inputValues: inputValues,
+              onValueChanged: (val) {
+                value = val.toString();
+                setState(() {});
+              },
+              labelDirection: NumericLabelDirection.down,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Output : " + value,
+              style: const TextStyle(color: Colors.black),
+            )
+          ],
+        ),
       ),
     );
   }

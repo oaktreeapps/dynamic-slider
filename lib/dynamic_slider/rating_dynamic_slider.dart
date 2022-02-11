@@ -52,8 +52,8 @@ class RatingDynamicSlider extends StatefulWidget {
     Key? key,
     required this.onValueChanged,
     required this.imagesList,
-    this.trackHeight = 5,
-    this.thumbColor = Colors.grey,
+    this.trackHeight = 3,
+    this.thumbColor = Colors.blue,
     this.activeTrackColor = Colors.blueGrey,
     this.activeTickMarkColor = Colors.green,
     this.inactiveTrackColor = Colors.black12,
@@ -212,14 +212,12 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
               Offset(
                   center.dx - 18,
                   labelDirection == AssetDirection.down
-                      ? center.dy + 15
-                      : center.dy - 45),
+                      ? center.dy + 18
+                      : center.dy - 48),
               paint);
           context.canvas.restore();
         }
-      }catch(execption){
-
-      }
+      }catch(exception){}
     }
   }
 }

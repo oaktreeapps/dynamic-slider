@@ -12,6 +12,7 @@ class DynamicSliderScreen extends StatefulWidget {
 class _DynamicSliderScreenState extends State<DynamicSliderScreen> {
 
   late List<int> inputValues;
+  var value = "";
 
   @override
   void initState() {
@@ -31,14 +32,27 @@ class _DynamicSliderScreenState extends State<DynamicSliderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: DynamicSlider(
-          isDivisible: true,
-          numberOfDivisions: 5,
-          inputValues: inputValues,
-          onValueChanged: (val) {
-            print(val.toString());
-          },
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DynamicSlider(
+              isDivisible: true,
+              inputValues: inputValues,
+              onValueChanged: (val) {
+                value = val.toString();
+                setState(() {});
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Output : " + value,
+              style: const TextStyle(color: Colors.black),
+            )
+          ],
         ),
       ),
     );
