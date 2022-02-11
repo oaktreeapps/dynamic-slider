@@ -8,10 +8,10 @@ class CustomThumbDynamicSlider extends StatefulWidget {
   final Function(int val) onValueChanged;
 
   /// division numbers
-  final int min;
+  final int minValue;
 
   /// division numbers
-  final int max;
+  final int maxValue;
 
   /// radius of thumb
   final double? thumbRadius;
@@ -58,8 +58,8 @@ class CustomThumbDynamicSlider extends StatefulWidget {
   const CustomThumbDynamicSlider({
     Key? key,
     required this.onValueChanged,
-    required this.min,
-    required this.max,
+    required this.minValue,
+    required this.maxValue,
     this.trackHeight = 3,
     this.thumbColor = Colors.grey,
     this.activeTrackColor = Colors.blueGrey,
@@ -85,22 +85,16 @@ class CustomThumbDynamicSlider extends StatefulWidget {
 class _CustomThumbDynamicSliderState extends State<CustomThumbDynamicSlider> {
 
   /// stream controller for slider output values
-  late final StreamController<double> dataController;
+  late final StreamController<double> dataController = StreamController<double>.broadcast();
   Stream<double> get onSliderChange => dataController.stream;
   void updateSliderData(double value) {
     dataController.sink.add(value);
   }
 
   @override
-  initState() {
-    super.initState();
-    dataController = StreamController<double>.broadcast();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return StreamBuilder<double>(
-        initialData: widget.min.toDouble(),
+        initialData: widget.minValue.toDouble(),
         stream: onSliderChange,
       builder: (context, snapshot) {
 
@@ -137,8 +131,8 @@ class _CustomThumbDynamicSliderState extends State<CustomThumbDynamicSlider> {
           ),
           child: Slider(
             value: value,
-            min: widget.min.toDouble(),
-            max: widget.max.toDouble(),
+            min: widget.minValue.toDouble(),
+            max: widget.maxValue.toDouble(),
             onChanged: (double value) {
               widget.onValueChanged(value.toInt());
               updateSliderData(value);

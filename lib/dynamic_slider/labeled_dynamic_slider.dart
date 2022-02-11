@@ -85,16 +85,16 @@ class LabeledDynamicSlider extends StatefulWidget {
 class _LabeledDynamicSliderState extends State<LabeledDynamicSlider> {
 
   /// stream controller for slider output values
-  late final StreamController<double> dataController;
+  late final StreamController<double> dataController= StreamController<double>.broadcast();
   Stream<double> get onSliderChange => dataController.stream;
   void updateSliderData(double value) {
     dataController.sink.add(value);
   }
 
+  /// init state
   @override
   void initState() {
     super.initState();
-    dataController = StreamController<double>.broadcast();
     _initInputValues();
   }
 
@@ -132,8 +132,7 @@ class _LabeledDynamicSliderState extends State<LabeledDynamicSlider> {
           showValueIndicator: ShowValueIndicator.always,
           valueIndicatorColor: Colors.transparent,
           valueIndicatorTextStyle: const TextStyle(color: Colors.transparent),
-          thumbShape:
-              RoundSliderThumbShape(enabledThumbRadius: widget.thumbRadius!)),
+          thumbShape: RoundSliderThumbShape(enabledThumbRadius: widget.thumbRadius!)),
       child: StreamBuilder<double>(
           initialData: 0,
           stream: onSliderChange,
@@ -156,11 +155,12 @@ class _LabeledDynamicSliderState extends State<LabeledDynamicSlider> {
 }
 
 class LineSliderTickMarkShape extends SliderTickMarkShape {
+
   final double? tickMarkRadius;
   final NumericLabelDirection? labelDirection;
   late final TextStyle? numericLabelTextStyle;
   final List<int>? inputValues;
-  final List<double> canvasIndex = [];
+  final List<double> canvasXIndex = [];
   final String? currencyPrefix;
 
   LineSliderTickMarkShape(
@@ -175,12 +175,11 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
     required SliderThemeData sliderTheme,
     required bool isEnabled,
   }) {
-    assert(sliderTheme != null);
     assert(sliderTheme.trackHeight != null);
-    assert(isEnabled != null);
     return Size.fromRadius(tickMarkRadius ?? sliderTheme.trackHeight! / 4);
   }
 
+  /// paint method
   @override
   void paint(
     PaintingContext context,
@@ -216,13 +215,16 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
         break;
     }
 
-    if (canvasIndex.length != inputValues!.length) {
-      canvasIndex.add(center.dx);
+    /// array to store index
+    if (canvasXIndex.length != inputValues!.length) {
+      canvasXIndex.add(center.dx);
     }
 
-    final Paint paint = Paint()
+    /// tick mark paint
+    final Paint tickMarkPaint = Paint()
       ..color = ColorTween(begin: begin, end: end).evaluate(enableAnimation)!;
 
+    /// marker paint
     final Paint markerPaint = Paint()
       ..strokeWidth = 1
       ..strokeCap = StrokeCap.round
@@ -230,10 +232,10 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
 
     if (tickMarkRadius! > 0) {
       context.canvas
-          .drawCircle(Offset(center.dx, center.dy), tickMarkRadius!, paint);
+          .drawCircle(Offset(center.dx, center.dy), tickMarkRadius!, tickMarkPaint);
 
       int index = 0;
-      for (var element in canvasIndex) {
+      for (var element in canvasXIndex) {
         if (element == center.dx) {
           break;
         }

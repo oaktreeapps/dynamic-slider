@@ -1,11 +1,14 @@
 library dynamic_slider;
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 
-class RatingDynamicSlider extends StatefulWidget {
+/// direction of assert
+enum AssetDirection { up, down }
 
+class RatingDynamicSlider extends StatefulWidget {
   /// value change listener
   final Function(double val) onValueChanged;
 
@@ -48,7 +51,7 @@ class RatingDynamicSlider extends StatefulWidget {
   /// asset image list
   final List<String> imagesList;
 
-  RatingDynamicSlider({
+  const RatingDynamicSlider({
     Key? key,
     required this.onValueChanged,
     required this.imagesList,
@@ -64,26 +67,29 @@ class RatingDynamicSlider extends StatefulWidget {
     this.overlayThumbRadius = 15,
     this.assetDirection = AssetDirection.down,
     this.tickMarkRadius = 4,
-  }) : assert(imagesList.isNotEmpty,"Please add image assets"),super(key: key);
+  })  : assert(imagesList.length >= 2, "Please add more than 2 image assets"),
+        super(key: key);
 
   @override
   _RatingDynamicSliderState createState() => _RatingDynamicSliderState();
 }
 
 class _RatingDynamicSliderState extends State<RatingDynamicSlider> {
+
+  /// array of images
   List<ui.Image> images = [];
 
   /// stream controller for slider output values
-  late final StreamController<double> dataController;
+  final StreamController<double> dataController = StreamController<double>.broadcast();
   Stream<double> get onSliderChange => dataController.stream;
   void updateSliderData(double value) {
     dataController.sink.add(value);
   }
 
+  /// init state
   @override
   void initState() {
     super.initState();
-    dataController = StreamController<double>.broadcast();
     _load();
   }
 
@@ -111,8 +117,7 @@ class _RatingDynamicSliderState extends State<RatingDynamicSlider> {
               tickMarkRadius: widget.tickMarkRadius,
               labelDirection: widget.assetDirection!,
               images: images),
-          inactiveTickMarkColor:
-              widget.inactiveTickMarkColor,
+          inactiveTickMarkColor: widget.inactiveTickMarkColor,
           overlayColor: widget.overlayColor,
           trackHeight: widget.trackHeight,
           showValueIndicator: ShowValueIndicator.always,
@@ -141,12 +146,10 @@ class _RatingDynamicSliderState extends State<RatingDynamicSlider> {
   }
 }
 
-enum AssetDirection { up, down }
-
 class LineSliderTickMarkShape extends SliderTickMarkShape {
   final double? tickMarkRadius;
   final AssetDirection? labelDirection;
-  final List<double> canvasIndex = [];
+  final List<double> canvasXIndex = [];
   List<ui.Image> images;
 
   LineSliderTickMarkShape({
@@ -164,6 +167,7 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
     return Size.fromRadius(tickMarkRadius ?? sliderTheme.trackHeight! / 4);
   }
 
+  /// paint method
   @override
   Future<void> paint(
     PaintingContext context,
@@ -175,7 +179,6 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
     required Offset thumbCenter,
     required bool isEnabled,
   }) async {
-
     switch (textDirection) {
       case TextDirection.ltr:
         break;
@@ -183,10 +186,12 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
         break;
     }
 
-    if (canvasIndex.length != images.length) {
-      canvasIndex.add(center.dx);
+    /// array to store index
+    if (canvasXIndex.length != images.length) {
+      canvasXIndex.add(center.dx);
     }
 
+    /// tick mark radius
     final double tickMarkRadius = getPreferredSize(
           isEnabled: isEnabled,
           sliderTheme: sliderTheme,
@@ -194,17 +199,17 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
         3;
 
     if (tickMarkRadius > 0) {
-
       int index = 0;
-      for (var element in canvasIndex) {
+      for (var element in canvasXIndex) {
         if (element == center.dx) {
           break;
         }
         index++;
       }
 
-      try{
-        if(images.isNotEmpty){
+      try {
+        /// draw image
+        if (images.isNotEmpty) {
           Paint paint = Paint()..color = Colors.green;
           context.canvas.save();
           context.canvas.drawImage(
@@ -217,7 +222,7 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
               paint);
           context.canvas.restore();
         }
-      }catch(exception){}
+      } catch (exception) {}
     }
   }
 }

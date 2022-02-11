@@ -3,7 +3,6 @@ import 'package:dynamic_slider/dynamic_slider/custom_thumb_dynamic_slider.dart';
 
 class CustomThumbDynamicSliderScreen extends StatefulWidget {
   const CustomThumbDynamicSliderScreen({Key? key}) : super(key: key);
-
   @override
   _CustomThumbDynamicSliderScreenState createState() => _CustomThumbDynamicSliderScreenState();
 }
@@ -23,8 +22,8 @@ class _CustomThumbDynamicSliderScreenState extends State<CustomThumbDynamicSlide
             CustomThumbDynamicSlider(
               thumbRadius: 23,
               currencyPrefix: "\$",
-              min: 0,
-              max: 100,
+              minValue: 0,
+              maxValue: 100,
               onValueChanged: (val) {
                 value = val.toString();
                 setState(() {});

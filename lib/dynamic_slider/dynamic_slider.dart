@@ -78,16 +78,16 @@ class DynamicSlider extends StatefulWidget {
 class _DynamicSliderState extends State<DynamicSlider> {
 
   /// stream controller for slider output values
-  late final StreamController<double> dataController;
+  final StreamController<double> dataController = StreamController<double>.broadcast();
   Stream<double> get onSliderChange => dataController.stream;
   void updateSliderData(double value) {
     dataController.sink.add(value);
   }
 
+  /// init state
   @override
   void initState() {
     super.initState();
-    dataController = StreamController<double>.broadcast();
     _initInputValues();
   }
 
