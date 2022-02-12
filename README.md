@@ -13,9 +13,14 @@ and the Flutter guide for
 
 # dynamic_slider
 
-A custom implementation of ``Slider`` widget in Flutter that lets us set custom values.
-## Getting started
+A custom implementation of ``Slider`` widget in Flutter that accepts values on a sliding scale. The default ``Slider`` widget only accepts values in equal increments.
+``dynamic_slider`` provides a mechanism to input values which may not be of equal increments.
 
+## Features
+* 4 different types of customizable widgets.
+* Each ``dynamic_slider`` widget can accept input values based on a sliding scale. For example, the following input is a valid input: ``[5,8,10,15,18,30,50,60,80,100]``
+* Customizable attributes to change ``trackColor``, ``thumbCircleColor``,``activeTrackColor``,``tickMarkRadius`` and more!
+* ``rating_dynamic_slider`` which supports emojis!
 
 ## Install
 
@@ -31,7 +36,6 @@ Add then following import:
 ```dart
 import 'package:dynamic_slider/custom_thumb_dynamic_slider.dart';
 ```
-
 
 ## Getting Started
 
@@ -114,7 +118,6 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 ```
-
 
 ## Demo
 <p align="center">
