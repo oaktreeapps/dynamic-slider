@@ -3,50 +3,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 
-/// direction of assert
-enum AssetDirection { up, down }
+enum AssetDirection { ABOVE, BELOW,}
 
 class RatingDynamicSlider extends StatefulWidget {
-  /// value change listener
+  /// Value change listener
   final Function(double val) onValueChanged;
 
-  /// radius of thumb
+  /// Radius of thumb
   final double? thumbRadius;
 
-  /// radius of overlay thumb radius
+  /// Radius of overlay thumb
   final double? overlayThumbRadius;
 
-  /// slider track height
+  /// Slider track height
   final double? trackHeight;
 
-  /// slider thumb color
+  /// Slider thumb color
   final Color? thumbColor;
 
-  /// active track color of slider
+  /// Active track color
   final Color? activeTrackColor;
 
-  /// active tick mark color of slider
+  /// Active tick mark color
   final Color? activeTickMarkColor;
 
-  /// inactive tick mark color of slider
+  /// Inactive tick mark color
   final Color? inactiveTrackColor;
 
-  /// color of overlay
+  /// Color of overlay
   final Color? overlayColor;
 
-  /// color of value indicator
+  /// Color of value indicator
   final Color? valueIndicatorColor;
 
-  /// color of inactive tick mark color
+  /// Color of inactive tick mark
   final Color? inactiveTickMarkColor;
 
-  /// asset direction
+  /// Asset direction
   final AssetDirection? assetDirection;
 
-  /// tick mark radius
+  /// Tick mark radius
   final double? tickMarkRadius;
 
-  /// asset image list
+  /// Asset image list
   final List<String> imagesList;
 
   const RatingDynamicSlider({
@@ -63,9 +62,9 @@ class RatingDynamicSlider extends StatefulWidget {
     this.inactiveTickMarkColor = Colors.black87,
     this.thumbRadius = 11,
     this.overlayThumbRadius = 15,
-    this.assetDirection = AssetDirection.down,
+    this.assetDirection = AssetDirection.BELOW,
     this.tickMarkRadius = 4,
-  })  : assert(imagesList.length >= 2, "Please add more than 2 image assets"),
+  })  : assert(imagesList.length >= 2, "Please add more than 2 images to draw the slider"),
         super(key: key);
 
   @override
@@ -74,24 +73,22 @@ class RatingDynamicSlider extends StatefulWidget {
 
 class _RatingDynamicSliderState extends State<RatingDynamicSlider> {
 
-  /// array of images
+  /// Array of images
   List<ui.Image> images = [];
 
-  /// stream controller for slider output values
+  /// Stream controller for slider output values
   final StreamController<double> dataController = StreamController<double>.broadcast();
   Stream<double> get onSliderChange => dataController.stream;
   void updateSliderData(double value) {
     dataController.sink.add(value);
   }
 
-  /// init state
   @override
   void initState() {
     super.initState();
     _load();
   }
 
-  /// load assets
   void _load() async {
     for (var element in widget.imagesList) {
       var bytes = await rootBundle.load(element);
@@ -214,7 +211,7 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
               images[index],
               Offset(
                   center.dx - 18,
-                  labelDirection == AssetDirection.down
+                  labelDirection == AssetDirection.BELOW
                       ? center.dy + 18
                       : center.dy - 48),
               paint);

@@ -2,52 +2,52 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class DynamicSlider extends StatefulWidget {
-  /// input array values
+  /// Input array values
   final List<int> inputValues;
 
-  /// Set false to remove divisions
+  /// Set false to remove division points across slider
   final bool isDivisible;
 
-  /// value change listener
+  /// Value change listener
   final Function(double val) onValueChanged;
 
-  /// division numbers
+  /// Total number of divisions
   final int? numberOfDivisions;
 
-  /// radius of thumb
+  /// Radius for thumb
   final double? thumbRadius;
 
-  /// radius of overlay thumb radius
+  /// Radius for thumb overlay
   final double? overlayThumbRadius;
 
-  /// slider track height
+  /// Slider track height
   final double? trackHeight;
 
-  /// slider thumb color
+  /// Slider thumb color
   final Color? thumbColor;
 
-  /// active track color of slider
+  /// Active track color
   final Color? activeTrackColor;
 
-  /// active tick mark color of slider
+  /// Active tick mark color
   final Color? activeTickMarkColor;
 
-  /// inactive tick mark color of slider
+  /// Inactive tick mark color
   final Color? inactiveTrackColor;
 
-  /// color of overlay
+  /// Color for overlay
   final Color? overlayColor;
 
-  /// color of value indicator
+  /// Color for values indicator
   final Color? valueIndicatorColor;
 
-  /// color of inactive tick mark color
+  /// Color for inactive tick mark color
   final Color? inactiveTickMarkColor;
 
-  /// currency prefix of value
+  /// Currency prefix for input values
   final String currencyPrefix;
 
-  /// tick mark radius
+  /// Tick mark radius
   final double? tickMarkRadius;
 
   DynamicSlider({
@@ -68,7 +68,7 @@ class DynamicSlider extends StatefulWidget {
     this.overlayThumbRadius = 15,
     this.tickMarkRadius = 3,
     this.currencyPrefix = "\$",
-  }) : assert(inputValues.isNotEmpty,"Please add values"),super(key: key);
+  }) : assert(inputValues.isNotEmpty,"Input Values cannot be empty."),super(key: key);
 
   @override
   _DynamicSliderState createState() => _DynamicSliderState();
@@ -76,21 +76,19 @@ class DynamicSlider extends StatefulWidget {
 
 class _DynamicSliderState extends State<DynamicSlider> {
 
-  /// stream controller for slider output values
+  /// Stream controller for slider output values
   final StreamController<double> dataController = StreamController<double>.broadcast();
   Stream<double> get onSliderChange => dataController.stream;
   void updateSliderData(double value) {
     dataController.sink.add(value);
   }
 
-  /// init state
   @override
   void initState() {
     super.initState();
     _initInputValues();
   }
 
-  /// inputted array divisions
   _initInputValues() {
     if (widget.isDivisible && widget.numberOfDivisions != null) {
       int lastValue = widget.inputValues.last;

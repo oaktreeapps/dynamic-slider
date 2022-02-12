@@ -1,58 +1,58 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-enum NumericLabelDirection { up, down }
+enum NumericLabelDirection { ABOVE, BELOW }
 
 class LabeledDynamicSlider extends StatefulWidget {
-  /// input array values
+  /// Input array values
   final List<int> inputValues;
 
-  /// value change listener
+  /// Value change listener
   final Function(double val) onValueChanged;
 
-  /// division numbers
+  /// Total number of divisions
   final int? numberOfDivisions;
 
-  /// radius of thumb
+  /// Radius for thumb
   final double? thumbRadius;
 
-  /// radius of overlay thumb radius
+  /// Radius for overlay thumb
   final double? overlayThumbRadius;
 
-  /// slider track height
+  /// Slider track height
   final double? trackHeight;
 
-  /// slider thumb color
+  /// Slider thumb color
   final Color? thumbColor;
 
-  /// active track color of slider
+  /// Active track color of slider
   final Color? activeTrackColor;
 
-  /// active tick mark color of slider
+  /// Active tick mark color
   final Color? activeTickMarkColor;
 
-  /// inactive tick mark color of slider
+  /// Inactive tick mark color
   final Color? inactiveTrackColor;
 
-  /// color of overlay
+  /// Color of overlay
   final Color? overlayColor;
 
-  /// color of value indicator
+  /// Color of value indicator
   final Color? valueIndicatorColor;
 
-  /// color of inactive tick mark color
+  /// Color of inactive tick mark color
   final Color? inactiveTickMarkColor;
 
-  /// currency prefix of value
+  /// Currency prefix for input values
   final String currencyPrefix;
 
-  /// numeric label direction
+  /// Numeric label direction
   final NumericLabelDirection? labelDirection;
 
-  /// tick mark radius
+  /// Tick mark radius
   final double? tickMarkRadius;
 
-  /// numeric label style
+  /// Numeric label style
   final TextStyle? numericLabelTextStyle;
 
   LabeledDynamicSlider({
@@ -71,7 +71,7 @@ class LabeledDynamicSlider extends StatefulWidget {
     this.thumbRadius = 11,
     this.overlayThumbRadius = 15,
     this.currencyPrefix = "\$",
-    this.labelDirection = NumericLabelDirection.down,
+    this.labelDirection = NumericLabelDirection.BELOW,
       this.tickMarkRadius = 3,
     this.numericLabelTextStyle = const TextStyle(
         color: Colors.black, fontSize: 14.0, fontFamily: 'Roboto'),
@@ -83,21 +83,19 @@ class LabeledDynamicSlider extends StatefulWidget {
 
 class _LabeledDynamicSliderState extends State<LabeledDynamicSlider> {
 
-  /// stream controller for slider output values
+  /// Stream controller for slider output values
   late final StreamController<double> dataController= StreamController<double>.broadcast();
   Stream<double> get onSliderChange => dataController.stream;
   void updateSliderData(double value) {
     dataController.sink.add(value);
   }
 
-  /// init state
   @override
   void initState() {
     super.initState();
     _initInputValues();
   }
 
-  /// inputted array divisions
   _initInputValues() {
     if (widget.numberOfDivisions != null) {
       int lastValue = widget.inputValues.last;
@@ -178,7 +176,7 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
     return Size.fromRadius(tickMarkRadius ?? sliderTheme.trackHeight! / 4);
   }
 
-  /// paint method
+  /// Paint method
   @override
   void paint(
     PaintingContext context,
@@ -214,16 +212,16 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
         break;
     }
 
-    /// array to store index
+    /// Array to store index
     if (canvasXIndex.length != inputValues!.length) {
       canvasXIndex.add(center.dx);
     }
 
-    /// tick mark paint
+    /// Tick mark paint
     final Paint tickMarkPaint = Paint()
       ..color = ColorTween(begin: begin, end: end).evaluate(enableAnimation)!;
 
-    /// marker paint
+    /// Marker paint
     final Paint markerPaint = Paint()
       ..strokeWidth = 1
       ..strokeCap = StrokeCap.round
@@ -245,7 +243,7 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
           Offset(center.dx, center.dy),
           Offset(
               center.dx,
-              labelDirection == NumericLabelDirection.down
+              labelDirection == NumericLabelDirection.BELOW
                   ? (center.dy + 15)
                   : (center.dy - 15)),
           markerPaint);
@@ -263,10 +261,10 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
       tp.paint(
           context.canvas,
           Offset(
-              labelDirection == NumericLabelDirection.down
+              labelDirection == NumericLabelDirection.BELOW
                   ? (center.dx - 12)
                   : (center.dx - 10),
-              labelDirection == NumericLabelDirection.down
+              labelDirection == NumericLabelDirection.BELOW
                   ? (center.dy + 20)
                   : (center.dy - 35)));
     }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomThumbDynamicSlider extends StatefulWidget {
 
-  /// value change listener
+  /// Value change listener
   final Function(int val) onValueChanged;
 
   /// division numbers
@@ -12,46 +12,46 @@ class CustomThumbDynamicSlider extends StatefulWidget {
   /// division numbers
   final int maxValue;
 
-  /// radius of thumb
+  /// Radius for thumb
   final double? thumbRadius;
 
-  /// color of thumb
+  /// Color for thumb
   final Color? thumbCircleColor;
 
-  /// radius of overlay thumb radius
+  /// Radius for thumb overlay
   final double? overlayThumbRadius;
 
-  /// slider track height
+  /// Slider track height
   final double? trackHeight;
 
-  /// slider thumb color
+  /// Slider thumb color
   final Color? thumbColor;
 
-  /// active track color of slider
+  /// Active track color of slider
   final Color? activeTrackColor;
 
-  /// active tick mark color of slider
+  /// Active tick mark color of slider
   final Color? activeTickMarkColor;
 
-  /// inactive tick mark color of slider
+  /// Inactive tick mark color of slider
   final Color? inactiveTrackColor;
 
-  /// color of overlay
+  /// Color for overlay
   final Color? overlayColor;
 
-  /// color of value indicator
+  /// Color of value indicator
   final Color? valueIndicatorColor;
 
-  /// color of inactive tick mark color
+  /// Color of inactive tick mark color
   final Color? inactiveTickMarkColor;
 
-  /// currency prefix of value
+  /// Currency prefix for input values
   final String currencyPrefix;
 
-  /// tick mark radius
+  /// Tick mark radius
   final double? tickMarkRadius;
 
-  /// thumb label style
+  /// Thumb label style
   final TextStyle? thumbLabelTextStyle;
 
   const CustomThumbDynamicSlider({
@@ -83,9 +83,11 @@ class CustomThumbDynamicSlider extends StatefulWidget {
 
 class _CustomThumbDynamicSliderState extends State<CustomThumbDynamicSlider> {
 
-  /// stream controller for slider output values
+  /// Stream controller for slider output values
   late final StreamController<double> dataController = StreamController<double>.broadcast();
+
   Stream<double> get onSliderChange => dataController.stream;
+
   void updateSliderData(double value) {
     dataController.sink.add(value);
   }
@@ -95,83 +97,82 @@ class _CustomThumbDynamicSliderState extends State<CustomThumbDynamicSlider> {
     return StreamBuilder<double>(
         initialData: widget.minValue.toDouble(),
         stream: onSliderChange,
-      builder: (context, snapshot) {
+        builder: (context, snapshot) {
+          double value = snapshot.data!.toDouble();
 
-        double value = snapshot.data!.toDouble();
-
-        return SliderTheme(
-          data: SliderThemeData(
-            overlayShape: RoundSliderThumbShape(
-                enabledThumbRadius: widget.overlayThumbRadius!),
-            thumbColor: widget.thumbColor,
-            activeTrackColor: widget.activeTrackColor,
-            inactiveTrackColor: widget.inactiveTrackColor,
-            activeTickMarkColor: widget.activeTickMarkColor,
-            tickMarkShape:
-                RoundSliderTickMarkShape(tickMarkRadius: widget.tickMarkRadius!),
-            inactiveTickMarkColor: widget.inactiveTickMarkColor,
-            overlayColor: widget.overlayColor,
-            trackHeight: widget.trackHeight,
-            showValueIndicator: ShowValueIndicator.always,
-            valueIndicatorShape: SliderThumbImage(
-                sliderValue:value,
-                thumbCircleColor: widget.thumbCircleColor,
-                thumbRadius: widget.thumbRadius,
-                thumbLabelTextStyle: widget.thumbLabelTextStyle,
-                currencyPrefix: widget.currencyPrefix),
-            valueIndicatorColor: Colors.transparent,
-            valueIndicatorTextStyle: const TextStyle(color: Colors.transparent),
-            thumbShape: SliderThumbImage(
-                sliderValue:value,
-                thumbCircleColor: widget.thumbCircleColor,
-                thumbRadius: widget.thumbRadius,
-                thumbLabelTextStyle: widget.thumbLabelTextStyle,
-                currencyPrefix: widget.currencyPrefix),
-          ),
-          child: Slider(
-            value: value,
-            min: widget.minValue.toDouble(),
-            max: widget.maxValue.toDouble(),
-            onChanged: (double value) {
-              widget.onValueChanged(value.toInt());
-              updateSliderData(value);
-            },
-          ),
-        );
-      }
+          return SliderTheme(
+            data: SliderThemeData(
+              overlayShape: RoundSliderThumbShape(
+                  enabledThumbRadius: widget.overlayThumbRadius!),
+              thumbColor: widget.thumbColor,
+              activeTrackColor: widget.activeTrackColor,
+              inactiveTrackColor: widget.inactiveTrackColor,
+              activeTickMarkColor: widget.activeTickMarkColor,
+              tickMarkShape:
+              RoundSliderTickMarkShape(tickMarkRadius: widget.tickMarkRadius!),
+              inactiveTickMarkColor: widget.inactiveTickMarkColor,
+              overlayColor: widget.overlayColor,
+              trackHeight: widget.trackHeight,
+              showValueIndicator: ShowValueIndicator.always,
+              valueIndicatorShape: SliderThumbImage(
+                  sliderValue: value,
+                  thumbCircleColor: widget.thumbCircleColor,
+                  thumbRadius: widget.thumbRadius,
+                  thumbLabelTextStyle: widget.thumbLabelTextStyle,
+                  currencyPrefix: widget.currencyPrefix),
+              valueIndicatorColor: Colors.transparent,
+              valueIndicatorTextStyle: const TextStyle(color: Colors.transparent),
+              thumbShape: SliderThumbImage(
+                  sliderValue: value,
+                  thumbCircleColor: widget.thumbCircleColor,
+                  thumbRadius: widget.thumbRadius,
+                  thumbLabelTextStyle: widget.thumbLabelTextStyle,
+                  currencyPrefix: widget.currencyPrefix),
+            ),
+            child: Slider(
+              value: value,
+              min: widget.minValue.toDouble(),
+              max: widget.maxValue.toDouble(),
+              onChanged: (double value) {
+                widget.onValueChanged(value.toInt());
+                updateSliderData(value);
+              },
+            ),
+          );
+        }
     );
   }
 }
 
 class SliderThumbImage extends SliderComponentShape {
 
-  /// thumb label style
+  /// Thumb label style
   final TextStyle? thumbLabelTextStyle;
   final String? currencyPrefix;
   final double? sliderValue;
   final Color? thumbCircleColor;
   final double? thumbRadius;
 
-  SliderThumbImage({this.thumbRadius,this.thumbCircleColor,this.thumbLabelTextStyle, this.currencyPrefix,this.sliderValue});
+  SliderThumbImage(
+      {this.thumbRadius, this.thumbCircleColor, this.thumbLabelTextStyle, this.currencyPrefix, this.sliderValue,});
 
   @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+  Size getPreferredSize(bool isEnabled, bool isDiscrete,) {
     return const Size(0, 0);
   }
 
   @override
   void paint(PaintingContext context, Offset center,
       {required Animation<double> activationAnimation,
-      required Animation<double> enableAnimation,
-      required bool isDiscrete,
-      required TextPainter labelPainter,
-      required RenderBox parentBox,
-      required SliderThemeData sliderTheme,
-      required TextDirection textDirection,
-      required double value,
-      required double textScaleFactor,
-      required Size sizeWithOverflow}) {
-
+        required Animation<double> enableAnimation,
+        required bool isDiscrete,
+        required TextPainter labelPainter,
+        required RenderBox parentBox,
+        required SliderThemeData sliderTheme,
+        required TextDirection textDirection,
+        required double value,
+        required double textScaleFactor,
+        required Size sizeWithOverflow,},) {
     final Paint labelCirclePaint = Paint();
     labelCirclePaint.color = thumbCircleColor!;
     context.canvas.drawCircle(
