@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dynamic_slider/dynamic_slider/custom_thumb_dynamic_slider.dart';
+import 'package:dynamic_slider/custom_thumb_dynamic_slider.dart';
 
 class CustomThumbDynamicSliderScreen extends StatefulWidget {
   const CustomThumbDynamicSliderScreen({Key? key}) : super(key: key);

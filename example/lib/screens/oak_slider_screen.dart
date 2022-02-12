@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dynamic_slider/dynamic_slider/dynamic_slider.dart';
+import 'package:dynamic_slider/dynamic_slider.dart';
 
 class DynamicSliderScreen extends StatefulWidget {
 

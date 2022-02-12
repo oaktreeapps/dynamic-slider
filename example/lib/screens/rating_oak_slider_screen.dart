@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dynamic_slider/dynamic_slider/rating_dynamic_slider.dart';
+import 'package:dynamic_slider/rating_dynamic_slider.dart';
 
 class RatingDynamicSliderScreen extends StatefulWidget {
   const RatingDynamicSliderScreen({Key? key}) : super(key: key);

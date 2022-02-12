@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dynamic_slider/dynamic_slider/labeled_dynamic_slider.dart';
+import 'package:dynamic_slider/labeled_dynamic_slider.dart';
 
 class LabeledDynamicSliderScreen extends StatefulWidget {
   const LabeledDynamicSliderScreen({Key? key}) : super(key: key);
