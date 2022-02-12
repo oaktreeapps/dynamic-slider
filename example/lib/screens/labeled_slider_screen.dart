@@ -1,16 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:dynamic_slider/dynamic_slider.dart';
+import 'package:flutter/material.dart';
 
-class DynamicSliderScreen extends StatefulWidget {
-
-  const DynamicSliderScreen({Key? key}) : super(key: key);
+class LabeledDynamicSliderScreen extends StatefulWidget {
+  const LabeledDynamicSliderScreen({Key? key}) : super(key: key);
 
   @override
-  _DynamicSliderScreenState createState() => _DynamicSliderScreenState();
+  _LabeledDynamicSliderScreenState createState() => _LabeledDynamicSliderScreenState();
 }
 
-class _DynamicSliderScreenState extends State<DynamicSliderScreen> {
-
+class _LabeledDynamicSliderScreenState extends State<LabeledDynamicSliderScreen> {
   late List<int> inputValues;
   var value = "";
 
@@ -58,4 +56,3 @@ class _DynamicSliderScreenState extends State<DynamicSliderScreen> {
     );
   }
 }
-

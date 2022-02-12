@@ -1,32 +1,26 @@
+import 'package:dynamic_slider/rating_dynamic_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:dynamic_slider/labeled_dynamic_slider.dart';
 
-class LabeledDynamicSliderScreen extends StatefulWidget {
-  const LabeledDynamicSliderScreen({Key? key}) : super(key: key);
+class RatingDynamicSliderScreen extends StatefulWidget {
+  const RatingDynamicSliderScreen({Key? key}) : super(key: key);
 
   @override
-  _LabeledDynamicSliderScreenState createState() => _LabeledDynamicSliderScreenState();
+  _RatingDynamicSliderScreenState createState() => _RatingDynamicSliderScreenState();
 }
 
-class _LabeledDynamicSliderScreenState extends State<LabeledDynamicSliderScreen> {
-  late List<int> inputValues;
+class _RatingDynamicSliderScreenState extends State<RatingDynamicSliderScreen> {
+  final List<String> imagesList = [];
   var value = "";
 
   @override
   void initState() {
     super.initState();
-    inputValues = [
-      5,
-      8,
-      10,
-      12,
-      18,
-      30,
-      45,
-      60,
-      80,
-      100,
-    ];
+
+    imagesList.add("assets/smile1.png");
+    imagesList.add("assets/smile2.png");
+    imagesList.add("assets/smile3.png");
+    imagesList.add("assets/smile4.png");
+    imagesList.add("assets/smile5.png");
   }
 
   @override
@@ -37,13 +31,13 @@ class _LabeledDynamicSliderScreenState extends State<LabeledDynamicSliderScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LabeledDynamicSlider(
-              inputValues: inputValues,
+            RatingDynamicSlider(
               onValueChanged: (val) {
                 value = val.toString();
                 setState(() {});
               },
-              labelDirection: NumericLabelDirection.down,
+              assetDirection: AssetDirection.ABOVE,
+              imagesList: imagesList,
             ),
             const SizedBox(
               height: 40,
