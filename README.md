@@ -11,34 +11,125 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# dynamic_slider
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
+A custom implementation of ``Slider`` widget in Flutter that lets us set custom values.
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+
+## Install
+
+In the ``pubspec.yaml`` of your flutter project, add the following dependency:
+
+```yaml
+dependencies:
+  dynamic_slider: <latest_version>
+```
+
+Add then following import:
+
+```dart
+import 'package:dynamic_slider/custom_thumb_dynamic_slider.dart';
+```
+
+
+## Getting Started
+
+Example:
+
+```dart
+import 'package:example/screens/custom_thumb_dynamic_slider_screen.dart';
+import 'package:example/screens/dynamic_slider_screen.dart';
+import 'package:example/screens/labeled_slider_screen.dart';
+import 'package:example/screens/rating_dynamic_slider_screen.dart';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Dynamic Slider Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Dynamic Slider'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  void _navigateToScreen(BuildContext context, Widget widget) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => widget));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  _navigateToScreen(context, const DynamicSliderScreen());
+                },
+                child: const Text("Dynamic Slider")),
+            ElevatedButton(
+                onPressed: () {
+                  _navigateToScreen(context, const LabeledDynamicSliderScreen());
+                },
+                child: const Text("Labeled Dynamic Slider")),
+            ElevatedButton(
+                onPressed: () {
+                  _navigateToScreen(context, const RatingDynamicSliderScreen());
+                },
+                child: const Text("Rating Dynamic Slider")),
+            ElevatedButton(
+                onPressed: () {
+                  _navigateToScreen(context, const CustomThumbDynamicSliderScreen());
+                },
+                child: const Text("Custom Thumb Dynamic Slider")),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+```
+
 
 ## Demo
 <p align="center">
 <img src="https://github.com/oaktreeapps/dynamic-slider/blob/main/assets/demo.gif" width="300"/>
 </p>
 
-## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+## Contributions
 
-```dart
-const like = 'sample';
-```
+Feel free to contribute to this project.
 
-## Additional information
+* If you find a bug or want have a new feature request, please file an [issue][issue].
+* If you fixed a bug or implemented a feature, please send a [pull request][pr].
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+
+<!-- Links -->
+[issue]: https://github.com/oaktreeapps/dynamic-slider/issues
+[pr]: https://github.com/oaktreeapps/dynamic-slider/pulls
