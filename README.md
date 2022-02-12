@@ -25,7 +25,7 @@ start using the package.
 
 ## Demo
 <p align="center">
-<img src="https://raw.githubusercontent.com/OakTree-Apps/dynamic_slider/main/assets/demo.gif" width="300"/>
+<img src="https://github.com/oaktreeapps/dynamic-slider/blob/main/assets/demo_video.mp4" width="300"/>
 </p>
 
 ## Usage
