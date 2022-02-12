@@ -24,10 +24,9 @@ TODO: List prerequisites and provide or point to information on how to
 start using the package.
 
 ## Demo
-<video width="320" height="240" controls>
-  <source src="https://github.com/oaktreeapps/dynamic-slider/blob/main/assets/demo_video.mp4" type="video/mp4">
-</video>
-
+<p align="center">
+<img src="https://github.com/oaktreeapps/dynamic-slider/blob/main/assets/demo.gif" width="300"/>
+</p>
 
 ## Usage
 
