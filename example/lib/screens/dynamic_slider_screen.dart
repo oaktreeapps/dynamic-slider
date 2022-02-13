@@ -43,7 +43,7 @@ class _DynamicSliderScreenState extends State<DynamicSliderScreen> {
                 value = val.toString();
                 setState(() {});
               },
-              labelDirection: NumericLabelDirection.BELOW,
+              labelDirection: NumericLabelDirection.below,
             ),
             const SizedBox(
               height: 40,

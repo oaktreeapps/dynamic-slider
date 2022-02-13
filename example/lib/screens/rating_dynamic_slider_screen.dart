@@ -36,7 +36,7 @@ class _RatingDynamicSliderScreenState extends State<RatingDynamicSliderScreen> {
                 value = val.toString();
                 setState(() {});
               },
-              assetDirection: AssetDirection.ABOVE,
+              assetDirection: AssetDirection.above,
               imagesList: imagesList,
             ),
             const SizedBox(
