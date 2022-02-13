@@ -1,6 +1,6 @@
 name: dynamic_slider
 description: A custom implementation of Slider widget in Flutter that accepts values on a sliding scale.
-version: 0.1.0-dev.2
+version: 0.1.0-dev.3
 repository: https://github.com/oaktreeapps/dynamic-slider
 
 environment:
