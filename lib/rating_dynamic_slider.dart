@@ -1,9 +1,13 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 
-enum AssetDirection { ABOVE, BELOW,}
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+enum AssetDirection {
+  above,
+  below,
+}
 
 class RatingDynamicSlider extends StatefulWidget {
   /// Value change listener
@@ -62,7 +66,7 @@ class RatingDynamicSlider extends StatefulWidget {
     this.inactiveTickMarkColor = Colors.black87,
     this.thumbRadius = 11,
     this.overlayThumbRadius = 15,
-    this.assetDirection = AssetDirection.BELOW,
+    this.assetDirection = AssetDirection.below,
     this.tickMarkRadius = 4,
   })  : assert(imagesList.length >= 2, "Please add more than 2 images to draw the slider"),
         super(key: key);
@@ -72,13 +76,14 @@ class RatingDynamicSlider extends StatefulWidget {
 }
 
 class _RatingDynamicSliderState extends State<RatingDynamicSlider> {
-
   /// Array of images
   List<ui.Image> images = [];
 
   /// Stream controller for slider output values
   final StreamController<double> dataController = StreamController<double>.broadcast();
+
   Stream<double> get onSliderChange => dataController.stream;
+
   void updateSliderData(double value) {
     dataController.sink.add(value);
   }
@@ -102,16 +107,13 @@ class _RatingDynamicSliderState extends State<RatingDynamicSlider> {
   Widget build(BuildContext context) {
     return SliderTheme(
       data: SliderThemeData(
-          overlayShape: RoundSliderThumbShape(
-              enabledThumbRadius: widget.overlayThumbRadius!),
+          overlayShape: RoundSliderThumbShape(enabledThumbRadius: widget.overlayThumbRadius!),
           thumbColor: widget.thumbColor,
           activeTrackColor: widget.activeTrackColor,
           inactiveTrackColor: widget.inactiveTrackColor,
           activeTickMarkColor: widget.activeTickMarkColor,
           tickMarkShape: LineSliderTickMarkShape(
-              tickMarkRadius: widget.tickMarkRadius,
-              labelDirection: widget.assetDirection!,
-              images: images),
+              tickMarkRadius: widget.tickMarkRadius, labelDirection: widget.assetDirection!, images: images),
           inactiveTickMarkColor: widget.inactiveTickMarkColor,
           overlayColor: widget.overlayColor,
           trackHeight: widget.trackHeight,
@@ -207,17 +209,13 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
         if (images.isNotEmpty) {
           Paint paint = Paint()..color = Colors.green;
           context.canvas.save();
-          context.canvas.drawImage(
-              images[index],
-              Offset(
-                  center.dx - 18,
-                  labelDirection == AssetDirection.BELOW
-                      ? center.dy + 18
-                      : center.dy - 48),
-              paint);
+          context.canvas.drawImage(images[index],
+              Offset(center.dx - 18, labelDirection == AssetDirection.below ? center.dy + 18 : center.dy - 48), paint);
           context.canvas.restore();
         }
-      } catch (exception) {}
+      } catch (exception) {
+        return;
+      }
     }
   }
 }

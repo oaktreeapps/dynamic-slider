@@ -1,8 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class CustomThumbDynamicSlider extends StatefulWidget {
-
   /// Value change listener
   final Function(int val) onValueChanged;
 
@@ -72,17 +72,14 @@ class CustomThumbDynamicSlider extends StatefulWidget {
     this.overlayThumbRadius = 15,
     this.currencyPrefix = "\$",
     this.tickMarkRadius = 3,
-    this.thumbLabelTextStyle = const TextStyle(
-        color: Colors.white, fontSize: 14.0, fontFamily: 'Roboto'),
+    this.thumbLabelTextStyle = const TextStyle(color: Colors.white, fontSize: 14.0, fontFamily: 'Roboto'),
   }) : super(key: key);
 
   @override
-  _CustomThumbDynamicSliderState createState() =>
-      _CustomThumbDynamicSliderState();
+  _CustomThumbDynamicSliderState createState() => _CustomThumbDynamicSliderState();
 }
 
 class _CustomThumbDynamicSliderState extends State<CustomThumbDynamicSlider> {
-
   /// Stream controller for slider output values
   late final StreamController<double> dataController = StreamController<double>.broadcast();
 
@@ -90,6 +87,12 @@ class _CustomThumbDynamicSliderState extends State<CustomThumbDynamicSlider> {
 
   void updateSliderData(double value) {
     dataController.sink.add(value);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    dataController.close();
   }
 
   @override
@@ -102,14 +105,12 @@ class _CustomThumbDynamicSliderState extends State<CustomThumbDynamicSlider> {
 
           return SliderTheme(
             data: SliderThemeData(
-              overlayShape: RoundSliderThumbShape(
-                  enabledThumbRadius: widget.overlayThumbRadius!),
+              overlayShape: RoundSliderThumbShape(enabledThumbRadius: widget.overlayThumbRadius!),
               thumbColor: widget.thumbColor,
               activeTrackColor: widget.activeTrackColor,
               inactiveTrackColor: widget.inactiveTrackColor,
               activeTickMarkColor: widget.activeTickMarkColor,
-              tickMarkShape:
-              RoundSliderTickMarkShape(tickMarkRadius: widget.tickMarkRadius!),
+              tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: widget.tickMarkRadius!),
               inactiveTickMarkColor: widget.inactiveTickMarkColor,
               overlayColor: widget.overlayColor,
               trackHeight: widget.trackHeight,
@@ -139,13 +140,11 @@ class _CustomThumbDynamicSliderState extends State<CustomThumbDynamicSlider> {
               },
             ),
           );
-        }
-    );
+        });
   }
 }
 
 class SliderThumbImage extends SliderComponentShape {
-
   /// Thumb label style
   final TextStyle? thumbLabelTextStyle;
   final String? currencyPrefix;
@@ -153,26 +152,37 @@ class SliderThumbImage extends SliderComponentShape {
   final Color? thumbCircleColor;
   final double? thumbRadius;
 
-  SliderThumbImage(
-      {this.thumbRadius, this.thumbCircleColor, this.thumbLabelTextStyle, this.currencyPrefix, this.sliderValue,});
+  SliderThumbImage({
+    this.thumbRadius,
+    this.thumbCircleColor,
+    this.thumbLabelTextStyle,
+    this.currencyPrefix,
+    this.sliderValue,
+  });
 
   @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete,) {
+  Size getPreferredSize(
+    bool isEnabled,
+    bool isDiscrete,
+  ) {
     return const Size(0, 0);
   }
 
   @override
-  void paint(PaintingContext context, Offset center,
-      {required Animation<double> activationAnimation,
-        required Animation<double> enableAnimation,
-        required bool isDiscrete,
-        required TextPainter labelPainter,
-        required RenderBox parentBox,
-        required SliderThemeData sliderTheme,
-        required TextDirection textDirection,
-        required double value,
-        required double textScaleFactor,
-        required Size sizeWithOverflow,},) {
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
     final Paint labelCirclePaint = Paint();
     labelCirclePaint.color = thumbCircleColor!;
     context.canvas.drawCircle(
@@ -183,15 +193,10 @@ class SliderThumbImage extends SliderComponentShape {
         thumbRadius!,
         labelCirclePaint);
 
-    TextSpan span = TextSpan(
-        style: thumbLabelTextStyle,
-        text: currencyPrefix.toString() +
-            sliderValue!.toInt().toString());
+    TextSpan span =
+        TextSpan(style: thumbLabelTextStyle, text: currencyPrefix.toString() + sliderValue!.toInt().toString());
 
-    TextPainter tp = TextPainter(
-        text: span,
-        textAlign: TextAlign.left,
-        textDirection: TextDirection.ltr);
+    TextPainter tp = TextPainter(text: span, textAlign: TextAlign.left, textDirection: TextDirection.ltr);
 
     tp.layout();
     tp.paint(context.canvas, Offset(center.dx - 10, center.dy - 9));

@@ -1,7 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-enum NumericLabelDirection { ABOVE, BELOW }
+enum NumericLabelDirection { above, below }
 
 class LabeledDynamicSlider extends StatefulWidget {
   /// Input array values
@@ -71,20 +72,19 @@ class LabeledDynamicSlider extends StatefulWidget {
     this.thumbRadius = 11,
     this.overlayThumbRadius = 15,
     this.currencyPrefix = "\$",
-    this.labelDirection = NumericLabelDirection.BELOW,
-      this.tickMarkRadius = 3,
-    this.numericLabelTextStyle = const TextStyle(
-        color: Colors.black, fontSize: 14.0, fontFamily: 'Roboto'),
-  }) : assert(inputValues.isNotEmpty,"Please add values"),super(key: key);
+    this.labelDirection = NumericLabelDirection.below,
+    this.tickMarkRadius = 3,
+    this.numericLabelTextStyle = const TextStyle(color: Colors.black, fontSize: 14.0, fontFamily: 'Roboto'),
+  })  : assert(inputValues.isNotEmpty, "Please add values"),
+        super(key: key);
 
   @override
   _LabeledDynamicSliderState createState() => _LabeledDynamicSliderState();
 }
 
 class _LabeledDynamicSliderState extends State<LabeledDynamicSlider> {
-
   /// Stream controller for slider output values
-  late final StreamController<double> dataController= StreamController<double>.broadcast();
+  late final StreamController<double> dataController = StreamController<double>.broadcast();
   Stream<double> get onSliderChange => dataController.stream;
   void updateSliderData(double value) {
     dataController.sink.add(value);
@@ -111,8 +111,7 @@ class _LabeledDynamicSliderState extends State<LabeledDynamicSlider> {
   Widget build(BuildContext context) {
     return SliderTheme(
       data: SliderThemeData(
-          overlayShape: RoundSliderThumbShape(
-              enabledThumbRadius: widget.overlayThumbRadius!),
+          overlayShape: RoundSliderThumbShape(enabledThumbRadius: widget.overlayThumbRadius!),
           thumbColor: widget.thumbColor,
           activeTrackColor: widget.activeTrackColor,
           inactiveTrackColor: widget.inactiveTrackColor,
@@ -141,8 +140,7 @@ class _LabeledDynamicSliderState extends State<LabeledDynamicSlider> {
               max: widget.inputValues.length - 1,
               divisions: widget.inputValues.length - 1,
               onChanged: (double value) {
-                widget.onValueChanged(
-                    widget.inputValues[value.toInt()].toDouble());
+                widget.onValueChanged(widget.inputValues[value.toInt()].toDouble());
                 updateSliderData(value);
               },
             );
@@ -152,7 +150,6 @@ class _LabeledDynamicSliderState extends State<LabeledDynamicSlider> {
 }
 
 class LineSliderTickMarkShape extends SliderTickMarkShape {
-
   final double? tickMarkRadius;
   final NumericLabelDirection? labelDirection;
   late final TextStyle? numericLabelTextStyle;
@@ -161,11 +158,7 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
   final String? currencyPrefix;
 
   LineSliderTickMarkShape(
-      {this.tickMarkRadius,
-      this.labelDirection,
-      this.numericLabelTextStyle,
-      this.inputValues,
-      this.currencyPrefix});
+      {this.tickMarkRadius, this.labelDirection, this.numericLabelTextStyle, this.inputValues, this.currencyPrefix});
 
   @override
   Size getPreferredSize({
@@ -196,19 +189,14 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
         begin = isTickMarkRightOfThumb
             ? sliderTheme.disabledInactiveTickMarkColor
             : sliderTheme.disabledActiveTickMarkColor;
-        end = isTickMarkRightOfThumb
-            ? sliderTheme.inactiveTickMarkColor
-            : sliderTheme.activeTickMarkColor;
+        end = isTickMarkRightOfThumb ? sliderTheme.inactiveTickMarkColor : sliderTheme.activeTickMarkColor;
 
         break;
       case TextDirection.rtl:
         final bool isTickMarkLeftOfThumb = center.dx < thumbCenter.dx;
-        begin = isTickMarkLeftOfThumb
-            ? sliderTheme.disabledInactiveTickMarkColor
-            : sliderTheme.disabledActiveTickMarkColor;
-        end = isTickMarkLeftOfThumb
-            ? sliderTheme.inactiveTickMarkColor
-            : sliderTheme.activeTickMarkColor;
+        begin =
+            isTickMarkLeftOfThumb ? sliderTheme.disabledInactiveTickMarkColor : sliderTheme.disabledActiveTickMarkColor;
+        end = isTickMarkLeftOfThumb ? sliderTheme.inactiveTickMarkColor : sliderTheme.activeTickMarkColor;
         break;
     }
 
@@ -218,8 +206,7 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
     }
 
     /// Tick mark paint
-    final Paint tickMarkPaint = Paint()
-      ..color = ColorTween(begin: begin, end: end).evaluate(enableAnimation)!;
+    final Paint tickMarkPaint = Paint()..color = ColorTween(begin: begin, end: end).evaluate(enableAnimation)!;
 
     /// Marker paint
     final Paint markerPaint = Paint()
@@ -228,8 +215,7 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
       ..color = ColorTween(begin: begin, end: end).evaluate(enableAnimation)!;
 
     if (tickMarkRadius! > 0) {
-      context.canvas
-          .drawCircle(Offset(center.dx, center.dy), tickMarkRadius!, tickMarkPaint);
+      context.canvas.drawCircle(Offset(center.dx, center.dy), tickMarkRadius!, tickMarkPaint);
 
       int index = 0;
       for (var element in canvasXIndex) {
@@ -241,32 +227,18 @@ class LineSliderTickMarkShape extends SliderTickMarkShape {
 
       context.canvas.drawLine(
           Offset(center.dx, center.dy),
-          Offset(
-              center.dx,
-              labelDirection == NumericLabelDirection.BELOW
-                  ? (center.dy + 15)
-                  : (center.dy - 15)),
+          Offset(center.dx, labelDirection == NumericLabelDirection.below ? (center.dy + 15) : (center.dy - 15)),
           markerPaint);
 
-      TextSpan span = TextSpan(
-          style: numericLabelTextStyle,
-          text: currencyPrefix! + inputValues![index].toString());
+      TextSpan span = TextSpan(style: numericLabelTextStyle, text: currencyPrefix! + inputValues![index].toString());
 
-      TextPainter tp = TextPainter(
-          text: span,
-          textAlign: TextAlign.left,
-          textDirection: TextDirection.ltr);
+      TextPainter tp = TextPainter(text: span, textAlign: TextAlign.left, textDirection: TextDirection.ltr);
 
       tp.layout();
       tp.paint(
           context.canvas,
-          Offset(
-              labelDirection == NumericLabelDirection.BELOW
-                  ? (center.dx - 12)
-                  : (center.dx - 10),
-              labelDirection == NumericLabelDirection.BELOW
-                  ? (center.dy + 20)
-                  : (center.dy - 35)));
+          Offset(labelDirection == NumericLabelDirection.below ? (center.dx - 12) : (center.dx - 10),
+              labelDirection == NumericLabelDirection.below ? (center.dy + 20) : (center.dy - 35)));
     }
   }
 }
