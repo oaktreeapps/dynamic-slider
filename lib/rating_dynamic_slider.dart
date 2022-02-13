@@ -94,6 +94,12 @@ class _RatingDynamicSliderState extends State<RatingDynamicSlider> {
     _load();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    dataController.close();
+  }
+
   void _load() async {
     for (var element in widget.imagesList) {
       var bytes = await rootBundle.load(element);

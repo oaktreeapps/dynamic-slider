@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class DynamicSlider extends StatefulWidget {
@@ -68,14 +69,14 @@ class DynamicSlider extends StatefulWidget {
     this.overlayThumbRadius = 15,
     this.tickMarkRadius = 3,
     this.currencyPrefix = "\$",
-  }) : assert(inputValues.isNotEmpty,"Input Values cannot be empty."),super(key: key);
+  })  : assert(inputValues.isNotEmpty, "Input Values cannot be empty."),
+        super(key: key);
 
   @override
   _DynamicSliderState createState() => _DynamicSliderState();
 }
 
 class _DynamicSliderState extends State<DynamicSlider> {
-
   /// Stream controller for slider output values
   final StreamController<double> dataController = StreamController<double>.broadcast();
   Stream<double> get onSliderChange => dataController.stream;
@@ -87,6 +88,12 @@ class _DynamicSliderState extends State<DynamicSlider> {
   void initState() {
     super.initState();
     _initInputValues();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    dataController.close();
   }
 
   _initInputValues() {
@@ -104,8 +111,7 @@ class _DynamicSliderState extends State<DynamicSlider> {
   Widget build(BuildContext context) {
     return SliderTheme(
       data: SliderThemeData(
-          overlayShape: RoundSliderThumbShape(
-              enabledThumbRadius: widget.overlayThumbRadius!),
+          overlayShape: RoundSliderThumbShape(enabledThumbRadius: widget.overlayThumbRadius!),
           thumbColor: widget.thumbColor,
           activeTrackColor: widget.activeTrackColor,
           inactiveTrackColor: widget.inactiveTrackColor,
@@ -120,33 +126,21 @@ class _DynamicSliderState extends State<DynamicSlider> {
             enabledThumbRadius: widget.thumbRadius!,
           )),
       child: StreamBuilder<double>(
-          initialData:
-          widget.isDivisible && widget.numberOfDivisions != null
-              ? 0
-              : widget.inputValues.first.toDouble(),
+          initialData: widget.isDivisible && widget.numberOfDivisions != null ? 0 : widget.inputValues.first.toDouble(),
           stream: onSliderChange,
           builder: (context, snapshot) {
             double value = snapshot.data!.toDouble();
 
             return Slider(
               value: value,
-              min: widget.isDivisible
-                  ? 0
-                  : widget.inputValues.first.toDouble(),
-              max: widget.isDivisible
-                  ? widget.inputValues.length - 1
-                  : widget.inputValues.last.toDouble(),
-              divisions: widget.isDivisible
-                  ? widget.inputValues.length - 1
-                  : widget.inputValues.last,
+              min: widget.isDivisible ? 0 : widget.inputValues.first.toDouble(),
+              max: widget.isDivisible ? widget.inputValues.length - 1 : widget.inputValues.last.toDouble(),
+              divisions: widget.isDivisible ? widget.inputValues.length - 1 : widget.inputValues.last,
               label: widget.isDivisible
-                  ? widget.currencyPrefix +
-                  widget.inputValues[value.toInt()].toString()
+                  ? widget.currencyPrefix + widget.inputValues[value.toInt()].toString()
                   : widget.currencyPrefix + value.toInt().toString(),
               onChanged: (double value) {
-                widget.onValueChanged(widget.isDivisible
-                    ? widget.inputValues[value.toInt()].toDouble()
-                    : value);
+                widget.onValueChanged(widget.isDivisible ? widget.inputValues[value.toInt()].toDouble() : value);
                 updateSliderData(value);
               },
             );

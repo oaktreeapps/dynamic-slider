@@ -96,6 +96,12 @@ class _LabeledDynamicSliderState extends State<LabeledDynamicSlider> {
     _initInputValues();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    dataController.close();
+  }
+
   _initInputValues() {
     if (widget.numberOfDivisions != null) {
       int lastValue = widget.inputValues.last;
