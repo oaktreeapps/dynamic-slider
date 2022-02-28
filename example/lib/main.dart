@@ -1,7 +1,10 @@
-import 'package:example/screens/custom_thumb_dynamic_slider_screen.dart';
-import 'package:example/screens/dynamic_slider_screen.dart';
-import 'package:example/screens/labeled_slider_screen.dart';
-import 'package:example/screens/rating_dynamic_slider_screen.dart';
+import 'package:example/screens/dynamic_slider/custom_thumb_dynamic_slider_screen.dart';
+import 'package:example/screens/dynamic_slider/dynamic_slider_screen.dart';
+import 'package:example/screens/dynamic_slider/labeled_slider_screen.dart';
+import 'package:example/screens/dynamic_slider/rating_dynamic_slider_screen.dart';
+import 'package:example/screens/range_dynamic_slider/range_custom_thumb_dynamic_slider_screen.dart';
+import 'package:example/screens/range_dynamic_slider/range_dynamic_slider_screen.dart';
+import 'package:example/screens/range_dynamic_slider/range_labeled_slider_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -66,6 +69,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   _navigateToScreen(context, const CustomThumbDynamicSliderScreen());
                 },
                 child: const Text("Custom Thumb Dynamic Slider")),
+
+            const SizedBox(height: 50,),
+
+            ElevatedButton(
+                onPressed: () {
+                  _navigateToScreen(context, const RangeDynamicSliderScreen());
+                },
+                child: const Text("Range Dynamic Slider")),
+
+            ElevatedButton(
+                onPressed: () {
+                  _navigateToScreen(context, const RangeCustomThumbDynamicSliderScreen());
+                },
+                child: const Text("Range Custom Thumb Dynamic Slider")),
+
+            ElevatedButton(
+                onPressed: () {
+                  _navigateToScreen(context, const RangeLabeledDynamicSliderScreen());
+                },
+                child: const Text("Range Labeled Dynamic Slider")),
           ],
         ),
       ),

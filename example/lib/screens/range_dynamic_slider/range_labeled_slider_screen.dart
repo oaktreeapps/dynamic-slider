@@ -1,14 +1,16 @@
-import 'package:dynamic_slider/dynamic_slider.dart';
+import 'package:dynamic_slider/range_labeled_dynamic_slider.dart';
 import 'package:flutter/material.dart';
 
-class LabeledDynamicSliderScreen extends StatefulWidget {
-  const LabeledDynamicSliderScreen({Key? key}) : super(key: key);
+class RangeLabeledDynamicSliderScreen extends StatefulWidget {
+  const RangeLabeledDynamicSliderScreen({Key? key}) : super(key: key);
 
   @override
-  _LabeledDynamicSliderScreenState createState() => _LabeledDynamicSliderScreenState();
+  _RangeLabeledDynamicSliderScreenState createState() =>
+      _RangeLabeledDynamicSliderScreenState();
 }
 
-class _LabeledDynamicSliderScreenState extends State<LabeledDynamicSliderScreen> {
+class _RangeLabeledDynamicSliderScreenState
+    extends State<RangeLabeledDynamicSliderScreen> {
   late List<int> inputValues;
   var value = "";
 
@@ -22,6 +24,8 @@ class _LabeledDynamicSliderScreenState extends State<LabeledDynamicSliderScreen>
       12,
       18,
       30,
+      20,
+      40,
       45,
       60,
     ];
@@ -35,16 +39,15 @@ class _LabeledDynamicSliderScreenState extends State<LabeledDynamicSliderScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DynamicSlider(
-              isDivisible: true,
-              inputValues: inputValues,
+            RangeLabeledDynamicSlider(
               onValueChanged: (val) {
                 value = val.toString();
                 setState(() {});
               },
+              inputValues: inputValues,
             ),
             const SizedBox(
-              height: 20,
+              height: 40,
             ),
             Text(
               "Output : " + value,
